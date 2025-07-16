@@ -123,6 +123,7 @@ const TicTacToe = (function () {
         }
 
         gameBoard.resetBoard();
+        displayController.render(gameBoard.currentBoard)
         currentPlayer = player1;
         gameStarted = true;
         isGameOver = false;
@@ -137,4 +138,9 @@ startButton.addEventListener("click", function() {
     const playerTwoName = document.getElementById("playerTwo").value;
 
     TicTacToe.startGame(playerOneName, playerTwoName);
+})
+
+const restartButton = document.getElementById("restart-btn");
+restartButton.addEventListener("click", function() {
+    TicTacToe.resetGame();
 })
