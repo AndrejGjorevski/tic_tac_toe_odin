@@ -156,7 +156,9 @@ const restartButton = document.getElementById("restart-btn");
 startButton.addEventListener("click", function () {
     const playerOneName = document.getElementById("playerOne").value;
     const playerTwoName = document.getElementById("playerTwo").value;
+    const menuDiv = document.getElementById("menu");
     restartButton.classList.remove("hide");
+    menuDiv.style.display = "none";
 
     TicTacToe.startGame(playerOneName, playerTwoName);
 })

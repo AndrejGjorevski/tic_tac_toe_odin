@@ -1,3 +1,27 @@
+#menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#playerOne {
+    margin-right: 10px;
+}
+
+.button {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    margin-top: 10px;
+    background-color: #007bff;
+    color: white;
+    width: 100px;
+    height: 40px;
+    border-radius: 15px;
+    border: 1px transparent #007bff;
+}
+
 #main-container {
     display: flex;
     flex-direction: column;
@@ -26,10 +50,6 @@
     margin-top: 20px;
 }
 
-.hide {
-    display: none;
-}
-
 #dialog-container {
     display: flex;
     justify-content: center;
@@ -52,4 +72,8 @@
     justify-content: center;
     align-items: center;
     margin-top: 70px;
+}
+
+.hide {
+    display: none;
 }
