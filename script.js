@@ -53,6 +53,7 @@ const TicTacToe = (function () {
     let player2 = null;
     let currentPlayer = null
     let gameStarted = false;
+    let isGameOver = false;
 
     function startGame(name1, name2) {
         player1 = createPlayer(name1, "X");
@@ -61,11 +62,11 @@ const TicTacToe = (function () {
         gameBoard.resetBoard();
         displayController.render(gameBoard.currentBoard)
         gameStarted = true;
+        isGameOver = false;
     }
 
     function playRound(posX, posY) {
-        if (!gameStarted) {
-            console.log("Game not started yet");
+        if (!gameStarted || isGameOver) {
             return;
         }
 
@@ -75,11 +76,13 @@ const TicTacToe = (function () {
 
         if (checkWin(currentPlayer.symbol)) {
             console.log(`${currentPlayer.name} wins!`);
+            isGameOver = true;
             return;
         }
 
         if (checkDraw()) {
             console.log("It's a draw");
+            isGameOver = true;
             return;
         }
 
@@ -122,6 +125,7 @@ const TicTacToe = (function () {
         gameBoard.resetBoard();
         currentPlayer = player1;
         gameStarted = true;
+        isGameOver = false;
     }
 
     return { startGame, playRound, resetGame }
