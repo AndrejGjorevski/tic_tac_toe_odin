@@ -9,10 +9,10 @@
 </head>
 
 <body>
+    <div id="title">
+        <h1>Tic Tac Toe</h1>
+    </div>
     <div id="menu">
-        <div>
-            <h1>Tic Tac Toe</h1>
-        </div>
         <div>
             <label for="playerOne">Player One Name:</label>
             <input type="text" id="playerOne">
@@ -23,6 +23,9 @@
     </div>
 
     <div id="main-container">
+        <div>
+            <h2 id="currentPlayerName"></h2>
+        </div>
         <div id="gameboard">
 
         </div>
@@ -32,8 +35,12 @@
     <div id="dialog-container">
         <dialog id="dialog">
             <div id="dialog-content">
-                <h2 id="qoute"></h2>
-                <input type="button" value="Close" id="close-btn">
+                <div>
+                    <h2 id="qoute"></h2>
+                </div>
+                <div>
+                    <input type="button" value="Close" id="close-btn">
+                </div>
             </div>
         </dialog>
     </div>

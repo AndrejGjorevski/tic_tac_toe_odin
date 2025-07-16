@@ -1,7 +1,7 @@
 const displayController = (function () {
     const boardContainer = document.getElementById("gameboard");
 
-    function render(board) {
+    function render(board, currentPlayer) {
         boardContainer.innerHTML = "";
         for (let i = 0; i < board.length; i++) {
             for (let j = 0; j < board.length; j++) {
@@ -14,6 +14,10 @@ const displayController = (function () {
                 cellDiv.addEventListener("click", handleClick, { once: true })
             }
         }
+
+        const currentPlayerDisplay = document.getElementById("currentPlayerName");
+        currentPlayerDisplay.innerHTML = "";
+        currentPlayerDisplay.innerText = currentPlayer.name;
     }
 
     function handleClick(event) {
@@ -78,7 +82,7 @@ const TicTacToe = (function () {
         player2 = createPlayer(name2, "O");
         currentPlayer = player1;
         gameBoard.resetBoard();
-        displayController.render(gameBoard.currentBoard)
+        displayController.render(gameBoard.currentBoard, currentPlayer)
         gameStarted = true;
         isGameOver = false;
     }
@@ -90,21 +94,22 @@ const TicTacToe = (function () {
 
         currentPlayer.addMoveToBoard(posX, posY);
 
-        displayController.render(gameBoard.currentBoard)
-
         if (checkWin(currentPlayer.symbol)) {
             displayController.renderWinner(currentPlayer);
             isGameOver = true;
-            return;
-        }
-
-        if (checkDraw()) {
-            displayController.renderDraw();
-            isGameOver = true;
+            displayController.render(gameBoard.currentBoard, currentPlayer);
             return;
         }
 
         currentPlayer = currentPlayer === player1 ? player2 : player1;
+        displayController.render(gameBoard.currentBoard, currentPlayer)
+
+        if (checkDraw()) {
+            displayController.renderDraw();
+            isGameOver = true;
+            displayController.render(gameBoard.currentBoard, currentPlayer)
+            return;
+        }
     }
 
     function checkWin(symbol) {
@@ -141,8 +146,8 @@ const TicTacToe = (function () {
         }
 
         gameBoard.resetBoard();
-        displayController.render(gameBoard.currentBoard)
         currentPlayer = player1;
+        displayController.render(gameBoard.currentBoard, currentPlayer)
         gameStarted = true;
         isGameOver = false;
     }
