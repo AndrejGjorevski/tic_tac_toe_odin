@@ -7,13 +7,19 @@ const displayController = (function () {
             for (let j = 0; j < board.length; j++) {
                 const cellDiv = document.createElement("div");
                 cellDiv.classList.add("cell");
-
-                const value = board[i][j];
-                console.log(`Rendering cell [${i}, ${j}] with value: "${value}"`);
-                cellDiv.innerText = value;
+                cellDiv.dataset.row = i;
+                cellDiv.dataset.col = j;
+                cellDiv.innerText = board[i][j];
                 boardContainer.appendChild(cellDiv);
+                cellDiv.addEventListener("click", handleClick, { once: true })
             }
         }
+    }
+
+    function handleClick(event) {
+        const row = event.target.dataset.row;
+        const col = event.target.dataset.col;
+        TicTacToe.playRound(Number(row), Number(col))
     }
 
     return { render }
@@ -52,7 +58,7 @@ const TicTacToe = (function () {
         player1 = createPlayer(name1, "X");
         player2 = createPlayer(name2, "O");
         currentPlayer = player1;
-        //gameBoard.resetBoard();
+        gameBoard.resetBoard();
         displayController.render(gameBoard.currentBoard)
         gameStarted = true;
     }
@@ -95,19 +101,16 @@ const TicTacToe = (function () {
     }
 
     function checkDraw() {
-        let flag = false;
         const board = gameBoard.currentBoard;
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
                 if (board[i][j] === "") {
-                    flag = false;
-                } else {
-                    flag = true;
+                    return false;
                 }
             }
         }
 
-        return flag;
+        return true;
     }
 
     function resetGame() {
@@ -123,3 +126,11 @@ const TicTacToe = (function () {
 
     return { startGame, playRound, resetGame }
 })();
+
+const startButton = document.getElementById("start-btn");
+startButton.addEventListener("click", function() {
+    const playerOneName = document.getElementById("playerOne").value;
+    const playerTwoName = document.getElementById("playerTwo").value;
+
+    TicTacToe.startGame(playerOneName, playerTwoName);
+})
