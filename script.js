@@ -22,7 +22,25 @@ const displayController = (function () {
         TicTacToe.playRound(Number(row), Number(col))
     }
 
-    return { render }
+    const closeBtn = document.getElementById("close-btn");
+    const dialog = document.getElementById("dialog");
+    const qoute = document.getElementById("qoute");
+
+    closeBtn.addEventListener("click", function () {
+        dialog.close();
+    })
+
+    function renderWinner(player) {
+        qoute.innerText = player.name + " wins!";
+        dialog.showModal();
+    }
+
+    function renderDraw() {
+        qoute.innerText = "Draw";
+        dialog.showModal();
+    }
+
+    return { render, renderWinner, renderDraw }
 
 })();
 
@@ -75,13 +93,13 @@ const TicTacToe = (function () {
         displayController.render(gameBoard.currentBoard)
 
         if (checkWin(currentPlayer.symbol)) {
-            console.log(`${currentPlayer.name} wins!`);
+            displayController.renderWinner(currentPlayer);
             isGameOver = true;
             return;
         }
 
         if (checkDraw()) {
-            console.log("It's a draw");
+            displayController.renderDraw();
             isGameOver = true;
             return;
         }
@@ -135,7 +153,7 @@ const TicTacToe = (function () {
 const startButton = document.getElementById("start-btn");
 const restartButton = document.getElementById("restart-btn");
 
-startButton.addEventListener("click", function() {
+startButton.addEventListener("click", function () {
     const playerOneName = document.getElementById("playerOne").value;
     const playerTwoName = document.getElementById("playerTwo").value;
     restartButton.classList.remove("hide");
@@ -143,6 +161,6 @@ startButton.addEventListener("click", function() {
     TicTacToe.startGame(playerOneName, playerTwoName);
 })
 
-restartButton.addEventListener("click", function() {
+restartButton.addEventListener("click", function () {
     TicTacToe.resetGame();
 })
