@@ -133,14 +133,16 @@ const TicTacToe = (function () {
 })();
 
 const startButton = document.getElementById("start-btn");
+const restartButton = document.getElementById("restart-btn");
+
 startButton.addEventListener("click", function() {
     const playerOneName = document.getElementById("playerOne").value;
     const playerTwoName = document.getElementById("playerTwo").value;
+    restartButton.classList.remove("hide");
 
     TicTacToe.startGame(playerOneName, playerTwoName);
 })
 
-const restartButton = document.getElementById("restart-btn");
 restartButton.addEventListener("click", function() {
     TicTacToe.resetGame();
 })

@@ -20,3 +20,11 @@
     justify-content: center;
     cursor: pointer;
 }
+
+#restart-btn {
+    margin-top: 20px;
+}
+
+.hide {
+    display: none;
+}
