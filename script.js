@@ -21,12 +21,25 @@ const TicTacToe = (function () {
         return { name, symbol, addMoveToBoard }
     }
 
-    const player1 = createPlayer("Andrej", "X");
-    const player2 = createPlayer("Kristina", "O");
-
-    let currentPlayer = player1;
+    let player1 = null;
+    let player2 = null;
+    let currentPlayer = null
+    let gameStarted = false;
+    
+    function startGame(name1, name2) {
+        player1 = createPlayer(name1, "X");
+        player2 = createPlayer(name2, "O");
+        currentPlayer = player1;
+        gameBoard.resetBoard();
+        gameStarted = true;
+    }
 
     function playRound(posX, posY) {
+        if (!gameStarted) {
+            console.log("Game not started yet");
+            return;
+        }
+
         currentPlayer.addMoveToBoard(posX, posY);
 
         if(checkWin(currentPlayer.symbol)) {
