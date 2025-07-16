@@ -1,3 +1,25 @@
+const displayController = (function () {
+    const boardContainer = document.getElementById("gameboard");
+
+    function render(board) {
+        boardContainer.innerHTML = "";
+        for (let i = 0; i < board.length; i++) {
+            for (let j = 0; j < board.length; j++) {
+                const cellDiv = document.createElement("div");
+                cellDiv.classList.add("cell");
+
+                const value = board[i][j];
+                console.log(`Rendering cell [${i}, ${j}] with value: "${value}"`);
+                cellDiv.innerText = value;
+                boardContainer.appendChild(cellDiv);
+            }
+        }
+    }
+
+    return { render }
+
+})();
+
 const TicTacToe = (function () {
     const gameBoard = (function () {
         const generateBoard = () => [["", "", ""], ["", "", ""], ["", "", ""]];
@@ -25,12 +47,13 @@ const TicTacToe = (function () {
     let player2 = null;
     let currentPlayer = null
     let gameStarted = false;
-    
+
     function startGame(name1, name2) {
         player1 = createPlayer(name1, "X");
         player2 = createPlayer(name2, "O");
         currentPlayer = player1;
-        gameBoard.resetBoard();
+        //gameBoard.resetBoard();
+        displayController.render(gameBoard.currentBoard)
         gameStarted = true;
     }
 
@@ -42,7 +65,9 @@ const TicTacToe = (function () {
 
         currentPlayer.addMoveToBoard(posX, posY);
 
-        if(checkWin(currentPlayer.symbol)) {
+        displayController.render(gameBoard.currentBoard)
+
+        if (checkWin(currentPlayer.symbol)) {
             console.log(`${currentPlayer.name} wins!`);
             return;
         }
@@ -59,8 +84,8 @@ const TicTacToe = (function () {
         const board = gameBoard.currentBoard;
 
         for (let i = 0; i < 3; i++) {
-           if (board[i][0] === symbol && board[i][1] === symbol && board[i][2] === symbol) return true;
-           if (board[0][i] === symbol && board[1][i] === symbol && board[2][i] === symbol) return true; 
+            if (board[i][0] === symbol && board[i][1] === symbol && board[i][2] === symbol) return true;
+            if (board[0][i] === symbol && board[1][i] === symbol && board[2][i] === symbol) return true;
         }
 
         if (board[0][0] === symbol && board[1][1] === symbol && board[2][2] === symbol) return true;
@@ -86,10 +111,15 @@ const TicTacToe = (function () {
     }
 
     function resetGame() {
+        if (!player1 || !player2) {
+            console.log("No players have been set you start the game first");
+            return;
+        }
+
         gameBoard.resetBoard();
         currentPlayer = player1;
+        gameStarted = true;
     }
 
-    return {createPlayer, playRound, resetGame}
+    return { startGame, playRound, resetGame }
 })();
-
